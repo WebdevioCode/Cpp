@@ -1,2 +1,3 @@
-# Cpp
-C++
+# C++
+
+this langauge seems cool
