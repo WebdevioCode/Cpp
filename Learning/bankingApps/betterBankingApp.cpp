@@ -3,9 +3,10 @@
 
 class bankAccount {
     private:
-        std::string owner;
-        double balance;
-        int pin;
+        std::string owner{};
+        double balance{};
+        int pin{};
+
     public:
         bankAccount(std::string accountHolder, double Startingbalance , int makingPin) {
             owner = accountHolder;
@@ -29,6 +30,8 @@ class bankAccount {
         void withdraw(double amount) {
             if (amount > balance) {
                 std::cout << "You dont have enough money";
+            } else if (amount <= 0) {
+                std::cout << "You cant take out 0 pound";
             } else {
                 balance -= amount;
                 std::cout << "Withdrawn " << amount << std::endl;
@@ -52,13 +55,14 @@ int main() {
     int pin{};
 
     std::cout << "Enter the name off your account\n >_";
-    std::cin >> name;
+    std::getline(std::cin, name);
 
     std::cout << "Enter account pin\n >_";
     std::cin >> pin;
 
-    bankAccount banker1(name, 50.0, pin);
+    bankAccount banker1(name, 50.00, pin);
     std::cout << "\nWelcome to your bank account " << std::endl;
+
     do
     {
        std::cout << std::endl << name << "'s account\n"
@@ -68,13 +72,14 @@ int main() {
                 << "(4)View pin\n"
                 << "(5)Exit program\n >_";
        std::cin >> choice;
+
        double amount{};
+       
        switch (choice) {
         case 1: 
             std::cout << "Balance " << banker1.showMoney(); 
             break;
         case 2:
-
             std::cout << "Enter the amount you would like to withdraw\n >_";
             std::cin >> amount;
             banker1.withdraw(amount);
