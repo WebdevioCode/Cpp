@@ -3,9 +3,9 @@
 
 int main() {
   const int screenWidth = 800;
-  const int screenHight = 450;
+  const int screenHeight = 450;
 
-  InitWindow(screenWidth, screenHight, "First mini game kinda");
+  InitWindow(screenWidth, screenHeight, "First mini game kinda");
 
   SetTargetFPS(60);
 
