@@ -27,17 +27,17 @@ int main() {
 
     Player player {
         {100, HEIGHT / 2 - 50},
-        {200.0f}
+        {300.0f}
     };
 
     Cpu cpu {
         {WIDTH - 100, HEIGHT / 2 - 50},
-        {200.0f}
+        {300.0f}
     };
 
     Ball ball {
         {WIDTH / 2, HEIGHT / 2  - 15.0f},
-        {200.0f, 200.0f},
+        {400.0f, 400.0f},
         {15.0f}
     };
 
@@ -57,7 +57,7 @@ int main() {
             ball.velocity.x *= - 1.0f;
         } 
 
-        if (player.position.y > 0) player.position.y = 0;
+        if (player.position.y < 0) player.position.y = 0;
         if (player.position.y > HEIGHT - 100) player.position.y = HEIGHT - 100;
 
 
