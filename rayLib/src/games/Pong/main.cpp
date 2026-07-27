@@ -1,5 +1,10 @@
 #include <iostream>
 #include "raylib.h"
+#include <random>
+
+
+int randomNumGen(int HEIGHT);
+
 
 struct Player {
     Vector2 position;
@@ -38,10 +43,12 @@ int main() {
     };
 
     Ball ball {
-        {WIDTH / 2, HEIGHT / 2  - 15.0f},
+        {WIDTH / 2, randomNumGen(HEIGHT) / 2  - 15.0f},
         {400.0f, 400.0f},
         {15.0f}
     };
+
+    Texture2D background{LoadTexture("imgs/PongBackground1.png")};
 
     while (!WindowShouldClose()) {
         float dt = GetFrameTime();
@@ -60,7 +67,7 @@ int main() {
         } 
 
         if (cpu.position.y + 50.0f < ball.position.y) cpu.position.y += cpu.speed * dt;
-        if (cpu.position.y + 50 > ball.position.y) cpu.position.y -= cpu.speed * dt; //Makes it so cpu works
+        else if (cpu.position.y + 50 > ball.position.y) cpu.position.y -= cpu.speed * dt; //Makes it so cpu works
 
 
         if (player.position.y < 0) player.position.y = 0;
@@ -68,6 +75,9 @@ int main() {
 
         if (cpu.position.y < 0) cpu.position.y = 0;
         if (cpu.position.y > HEIGHT - 100) cpu.position.y = HEIGHT - 100; //Cpu paddle error bounds
+
+
+        
 
         Rectangle playerRect = {player.position.x, player.position.y, 30,100};
         Rectangle cpuRect = {cpu.position.x, cpu.position.y, 30,100};
@@ -90,15 +100,25 @@ int main() {
 
             ClearBackground(RAYWHITE);
 
-            DrawRectangle(player.position.x, player.position.y, 30, 100, BLACK); //Draw player paddle
-            DrawRectangle(cpu.position.x, cpu.position.y, 30, 100, BLACK); //Draw cpu paddle
-            DrawText(TextFormat("%i", score), 20, 20, 60 , BLACK); //Draw player score
-            DrawText(TextFormat("%i", cpuScore), WIDTH - 40, 20, 60 , BLACK); //Draw cpu score
-            DrawCircleV(ball.position, ball.radius, BLACK); //Draw ball
+            DrawTexture(background, 0, 0, WHITE);
+
+            DrawRectangle(player.position.x, player.position.y, 30, 100, WHITE); //Draw player paddle
+            DrawRectangle(cpu.position.x, cpu.position.y, 30, 100, WHITE); //Draw cpu paddle
+            DrawText(TextFormat("%i", score), 20, 20, 60 , WHITE); //Draw player score
+            DrawText(TextFormat("%i", cpuScore), WIDTH - 40, 20, 60 , WHITE); //Draw cpu score
+            DrawCircleV(ball.position, ball.radius, WHITE); //Draw ball
 
         EndDrawing();
     }
-
+    UnloadTexture(background);
     CloseWindow();
     return 0;
+}
+
+int randomNumGen(int HEIGHT ) {
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    std::uniform_int_distribution random(50, HEIGHT - 50);
+
+    return random(gen);
 }
